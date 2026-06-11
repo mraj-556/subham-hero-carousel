@@ -54,8 +54,9 @@ export function HeroCarousel() {
 
             // Side cards sit mostly behind the center card with a small peek.
             const translatePct = off * 6;
-            const rotate = off === 0 ? 0 : off > 0 ? 4 : -4;
-            const scale = isCenter ? 1 : 0.94;
+            const rotate = 0;
+            const scale = 1;
+            const heightPct = isCenter ? 88 : 78;
             const z = 50 - abs;
             const opacity = abs > 1 ? 0 : 1;
 
