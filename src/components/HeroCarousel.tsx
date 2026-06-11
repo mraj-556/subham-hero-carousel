@@ -10,7 +10,7 @@ const slides = [
   { src: slide3, alt: "Save in Style — up to 50% off on making charges" },
 ];
 
-const AUTOPLAY_MS = 1000;
+const AUTOPLAY_MS = 2000;
 
 export function HeroCarousel() {
   const [active, setActive] = useState(0);
@@ -41,12 +41,14 @@ export function HeroCarousel() {
     <section
       aria-label="Featured promotions"
       className="relative w-full overflow-hidden bg-gradient-to-b from-[#fff5f7] via-[#fde7ee] to-[#fbd6e2] py-6 sm:py-10 lg:py-14"
-      onMouseEnter={() => (pausedRef.current = true)}
-      onMouseLeave={() => (pausedRef.current = false)}
+      
     >
       <div className="relative mx-auto aspect-[1000/420] w-full max-w-[1200px]">
         {/* Slides */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0"
+              onMouseEnter={() => (pausedRef.current = true)}
+              onMouseLeave={() => (pausedRef.current = false)}
+      >
           {slides.map((s, i) => {
             const off = offsetOf(i);
             const abs = Math.abs(off);
