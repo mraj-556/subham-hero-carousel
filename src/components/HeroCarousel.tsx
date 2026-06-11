@@ -64,8 +64,9 @@ export function HeroCarousel() {
               <div
                 key={i}
                 aria-hidden={!isCenter}
-                className="absolute left-1/2 top-1/2 h-[88%] w-[82%] sm:w-[84%] md:w-[86%] lg:w-[88%] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
+                className="absolute left-1/2 top-1/2 w-[82%] sm:w-[84%] md:w-[86%] lg:w-[88%] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
                 style={{
+                  height: `${heightPct}%`,
                   transform: `translate(-50%, -50%) translateX(${translatePct}%) rotate(${rotate}deg) scale(${scale})`,
                   zIndex: z,
                   opacity,
