@@ -10,7 +10,7 @@ const slides = [
   { src: slide3, alt: "Save in Style — up to 50% off on making charges" },
 ];
 
-const AUTOPLAY_MS = 5000;
+const AUTOPLAY_MS = 1000;
 
 export function HeroCarousel() {
   const [active, setActive] = useState(0);
