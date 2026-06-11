@@ -1,5 +1,5 @@
 ## Goal
-Build only the hero carousel section, matching the Mia by Tanishq animation: a centered banner card with the previous/next slides peeking on either side as tilted/angled cards, smooth slide transitions, prev/next arrow buttons, diamond-shaped dot indicators, and auto-advance. Fully responsive (desktop shows side peeks; mobile shows just the active card with a small peek edge, like the mobile screenshot).
+Build only the hero carousel section, matching the: a centered banner card with the previous/next slides peeking on either side as tilted/angled cards, smooth slide transitions, prev/next arrow buttons, diamond-shaped dot indicators, and auto-advance. Fully responsive (desktop shows side peeks; mobile shows just the active card with a small peek edge, like the mobile screenshot).
 
 ## Behavior
 - 3–4 banner slides with placeholder jewelry imagery (generated, pink/rose theme matching the reference).

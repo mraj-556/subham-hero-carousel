@@ -4,17 +4,17 @@ import HeroCarousel from "@/components/HeroCarousel";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Hero Carousel — Mia-style Animation" },
+      { title: "Hero Carousel" },
       {
         name: "description",
         content:
-          "A responsive hero carousel inspired by Mia by Tanishq, with tilted side-peek slides and smooth transitions.",
+          "A responsive hero carousel inspired by , with tilted side-peek slides and smooth transitions.",
       },
-      { property: "og:title", content: "Hero Carousel — Mia-style Animation" },
+      { property: "og:title", content: "Hero Carousel" },
       {
         property: "og:description",
         content:
-          "A responsive hero carousel inspired by Mia by Tanishq, with tilted side-peek slides and smooth transitions.",
+          "A responsive hero carousel inspired by, with tilted side-peek slides and smooth transitions.",
       },
     ],
   }),
