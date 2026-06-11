@@ -1,29 +1,31 @@
 import { createFileRoute } from "@tanstack/react-router";
+import HeroCarousel from "@/components/HeroCarousel";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Hero Carousel — Mia-style Animation" },
+      {
+        name: "description",
+        content:
+          "A responsive hero carousel inspired by Mia by Tanishq, with tilted side-peek slides and smooth transitions.",
+      },
+      { property: "og:title", content: "Hero Carousel — Mia-style Animation" },
+      {
+        property: "og:description",
+        content:
+          "A responsive hero carousel inspired by Mia by Tanishq, with tilted side-peek slides and smooth transitions.",
+      },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="min-h-screen bg-[#fff8fa]">
+      <h1 className="sr-only">Featured promotions carousel</h1>
+      <HeroCarousel />
+    </main>
   );
 }
