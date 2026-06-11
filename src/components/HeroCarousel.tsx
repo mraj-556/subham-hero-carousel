@@ -44,19 +44,18 @@ export function HeroCarousel() {
       onMouseEnter={() => (pausedRef.current = true)}
       onMouseLeave={() => (pausedRef.current = false)}
     >
-      <div className="relative mx-auto h-[58vw] max-h-[640px] min-h-[320px] w-full max-w-[1400px]">
+      <div className="relative mx-auto aspect-[1000/420] w-full max-w-[1200px]">
         {/* Slides */}
-        <div className="absolute inset-0 [perspective:1600px]">
+        <div className="absolute inset-0">
           {slides.map((s, i) => {
             const off = offsetOf(i);
             const abs = Math.abs(off);
             const isCenter = off === 0;
 
-            // Translate as % of container width; tuned per breakpoint via CSS var
-            // We use clamp() so peeks shrink on small screens.
-            const translatePct = off * 78; // % of card width-ish
-            const rotate = off === 0 ? 0 : off > 0 ? 10 : -10;
-            const scale = isCenter ? 1 : 0.88;
+            // Side cards sit mostly behind the center card with a small peek.
+            const translatePct = off * 6;
+            const rotate = off === 0 ? 0 : off > 0 ? 4 : -4;
+            const scale = isCenter ? 1 : 0.94;
             const z = 50 - abs;
             const opacity = abs > 1 ? 0 : 1;
 
@@ -64,20 +63,19 @@ export function HeroCarousel() {
               <div
                 key={i}
                 aria-hidden={!isCenter}
-                className="absolute left-1/2 top-1/2 h-full w-[88%] sm:w-[72%] md:w-[64%] lg:w-[58%] xl:w-[52%] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
+                className="absolute left-1/2 top-1/2 h-[88%] w-[82%] sm:w-[84%] md:w-[86%] lg:w-[88%] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
                 style={{
-                  transform: `translate(-50%, -50%) translateX(${translatePct}%) rotateY(${rotate}deg) scale(${scale})`,
+                  transform: `translate(-50%, -50%) translateX(${translatePct}%) rotate(${rotate}deg) scale(${scale})`,
                   zIndex: z,
                   opacity,
-                  transformStyle: "preserve-3d",
                 }}
               >
-                <div className="relative h-full w-full overflow-hidden rounded-2xl shadow-[0_20px_50px_-20px_rgba(190,30,80,0.45)] ring-1 ring-black/5">
+                <div className="relative h-full w-full overflow-hidden rounded-xl shadow-[0_20px_50px_-20px_rgba(190,30,80,0.45)] ring-1 ring-black/5">
                   <img
                     src={s.src}
                     alt={s.alt}
-                    width={1024}
-                    height={1024}
+                    width={1200}
+                    height={500}
                     loading={i === 0 ? "eager" : "lazy"}
                     draggable={false}
                     className="h-full w-full object-cover select-none"
@@ -87,6 +85,7 @@ export function HeroCarousel() {
             );
           })}
         </div>
+
 
         {/* Arrows */}
         <button
