@@ -14,26 +14,55 @@ const AUTOPLAY_MS = 2000;
 
 export function HeroCarousel() {
   const [active, setActive] = useState(0);
+
   const total = slides.length;
   const pausedRef = useRef(false);
+  const timerRef = useRef<number | null>(null);
 
-  const go = useCallback(
-    (dir: 1 | -1) => setActive((a) => (a + dir + total) % total),
-    [total],
-  );
+  const startAutoplay = useCallback(() => {
+    if (timerRef.current) {
+      window.clearInterval(timerRef.current);
+    }
 
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      if (!pausedRef.current) setActive((a) => (a + 1) % total);
+    timerRef.current = window.setInterval(() => {
+      if (!pausedRef.current) {
+        setActive((prev) => (prev + 1) % total);
+      }
     }, AUTOPLAY_MS);
-    return () => window.clearInterval(id);
   }, [total]);
 
-  // signed offset in range [-floor(n/2), ceil(n/2)-1] so neighbors wrap symmetrically
+  useEffect(() => {
+    startAutoplay();
+
+    return () => {
+      if (timerRef.current) {
+        window.clearInterval(timerRef.current);
+      }
+    };
+  }, [startAutoplay]);
+
+  const go = useCallback(
+    (dir: 1 | -1) => {
+      setActive((prev) => (prev + dir + total) % total);
+      startAutoplay(); // reset timer after manual navigation
+    },
+    [total, startAutoplay]
+  );
+
+  const goToSlide = useCallback(
+    (index: number) => {
+      setActive(index);
+      startAutoplay(); // reset timer after manual navigation
+    },
+    [startAutoplay]
+  );
+
   const offsetOf = (i: number) => {
     let d = i - active;
+
     if (d > total / 2) d -= total;
     if (d < -total / 2) d += total;
+
     return d;
   };
 
@@ -41,20 +70,23 @@ export function HeroCarousel() {
     <section
       aria-label="Featured promotions"
       className="relative w-full overflow-hidden bg-gradient-to-b from-[#fff5f7] via-[#fde7ee] to-[#fbd6e2] py-6 sm:py-10 lg:py-14"
-      
     >
       <div className="relative mx-auto aspect-[1000/420] w-full max-w-[1200px]">
         {/* Slides */}
-        <div className="absolute inset-0"
-              onMouseEnter={() => (pausedRef.current = true)}
-              onMouseLeave={() => (pausedRef.current = false)}
-      >
+        <div
+          className="absolute inset-0"
+          onMouseEnter={() => {
+            pausedRef.current = true;
+          }}
+          onMouseLeave={() => {
+            pausedRef.current = false;
+          }}
+        >
           {slides.map((s, i) => {
             const off = offsetOf(i);
             const abs = Math.abs(off);
             const isCenter = off === 0;
 
-            // Side cards sit mostly behind the center card with a small peek.
             const translatePct = off * 6;
             const rotate = 0;
             const scale = 1;
@@ -82,7 +114,7 @@ export function HeroCarousel() {
                     height={500}
                     loading={i === 0 ? "eager" : "lazy"}
                     draggable={false}
-                    className="h-full w-full object-cover select-none"
+                    className="h-full w-full select-none object-cover"
                   />
                 </div>
               </div>
@@ -90,37 +122,39 @@ export function HeroCarousel() {
           })}
         </div>
 
-
-        {/* Arrows */}
+        {/* Previous */}
         <button
           type="button"
           aria-label="Previous slide"
           onClick={() => go(-1)}
-          className="absolute left-2 sm:left-4 lg:left-8 top-1/2 z-[60] -translate-y-1/2 grid h-10 w-10 sm:h-12 sm:w-12 place-items-center rounded-full bg-white text-rose-700 shadow-lg ring-1 ring-black/5 transition hover:scale-105 hover:bg-rose-50 active:scale-95"
+          className="absolute left-2 top-1/2 z-[60] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white text-rose-700 shadow-lg ring-1 ring-black/5 transition hover:scale-105 hover:bg-rose-50 active:scale-95 sm:left-4 sm:h-12 sm:w-12 lg:left-8"
         >
           <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
+
+        {/* Next */}
         <button
           type="button"
           aria-label="Next slide"
           onClick={() => go(1)}
-          className="absolute right-2 sm:right-4 lg:right-8 top-1/2 z-[60] -translate-y-1/2 grid h-10 w-10 sm:h-12 sm:w-12 place-items-center rounded-full bg-white text-rose-700 shadow-lg ring-1 ring-black/5 transition hover:scale-105 hover:bg-rose-50 active:scale-95"
+          className="absolute right-2 top-1/2 z-[60] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white text-rose-700 shadow-lg ring-1 ring-black/5 transition hover:scale-105 hover:bg-rose-50 active:scale-95 sm:right-4 sm:h-12 sm:w-12 lg:right-8"
         >
           <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
       </div>
 
-      {/* Diamond indicators */}
+      {/* Indicators */}
       <div className="mt-5 flex items-center justify-center gap-3">
         {slides.map((_, i) => {
           const isActive = i === active;
+
           return (
             <button
               key={i}
               type="button"
               aria-label={`Go to slide ${i + 1}`}
               aria-current={isActive}
-              onClick={() => setActive(i)}
+              onClick={() => goToSlide(i)}
               className="grid place-items-center p-1"
             >
               <span
