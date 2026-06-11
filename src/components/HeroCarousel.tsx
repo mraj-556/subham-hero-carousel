@@ -54,8 +54,9 @@ export function HeroCarousel() {
 
             // Side cards sit mostly behind the center card with a small peek.
             const translatePct = off * 6;
-            const rotate = off === 0 ? 0 : off > 0 ? 4 : -4;
-            const scale = isCenter ? 1 : 0.94;
+            const rotate = 0;
+            const scale = 1;
+            const heightPct = isCenter ? 88 : 78;
             const z = 50 - abs;
             const opacity = abs > 1 ? 0 : 1;
 
@@ -63,8 +64,9 @@ export function HeroCarousel() {
               <div
                 key={i}
                 aria-hidden={!isCenter}
-                className="absolute left-1/2 top-1/2 h-[88%] w-[82%] sm:w-[84%] md:w-[86%] lg:w-[88%] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
+                className="absolute left-1/2 top-1/2 w-[82%] sm:w-[84%] md:w-[86%] lg:w-[88%] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
                 style={{
+                  height: `${heightPct}%`,
                   transform: `translate(-50%, -50%) translateX(${translatePct}%) rotate(${rotate}deg) scale(${scale})`,
                   zIndex: z,
                   opacity,
